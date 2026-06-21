@@ -2,7 +2,8 @@ import { connect } from "framer-api"
 
 const PROJECT_URL = "https://framer.com/projects/systemlink-ch-2--OJrpYeSo4XOmvRRkt9O7-4Jt8d"
 
-const payload = JSON.parse(process.env.ARTICLE_PAYLOAD)
+const raw = JSON.parse(process.env.ARTICLE_PAYLOAD)
+const payload = raw.data ? JSON.parse(raw.data) : raw
 
 const {
   slug,

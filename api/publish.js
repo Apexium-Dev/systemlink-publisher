@@ -35,7 +35,7 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify({
           event_type: "publish-article",
-          client_payload: body,
+          client_payload: { data: JSON.stringify(body) },
         }),
       }
     )
