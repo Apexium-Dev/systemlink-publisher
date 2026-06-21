@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SystemLink — Publish Article</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f4f5;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 16px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      width: 100%;
+      max-width: 720px;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #aaa;
+      margin: 28px 0 12px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 6px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #e4e4e7;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #111;
+      background: #fafafa;
+      transition: border-color 0.15s;
+      outline: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #6366f1;
+      background: #fff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 180px;
+      font-family: monospace;
+      font-size: 13px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .secret-field {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 28px;
+      padding: 14px;
+      background: #6366f1;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    button:hover { background: #4f46e5; }
+    button:disabled { background: #a5b4fc; cursor: not-allowed; }
+
+    #status {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      display: none;
+    }
+
+    #status.success { background: #f0fdf4; color: #16a34a; display: block; }
+    #status.error   { background: #fef2f2; color: #dc2626; display: block; }
+    #status.loading { background: #f5f3ff; color: #7c3aed; display: block; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Publish Article</h1>
+    <p class="subtitle">Fill in the fields below and hit Publish — the article goes live on systemlink.ch instantly.</p>
+
+    <form id="form">
+
+      <div class="section-title">Article</div>
+
+      <div class="field">
+        <label>Title *</label>
+        <input type="text" name="title" placeholder="e.g. How to Reduce ERP Implementation Risk" required />
+      </div>
+
+      <div class="field">
+        <label>Slug * <span style="font-weight:400;color:#aaa">(URL-friendly, no spaces)</span></label>
+        <input type="text" name="slug" placeholder="e.g. reduce-erp-implementation-risk" required />
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Article Type</label>
+          <select name="articleType">
+            <option value="bbYlKoiV1">ROI &amp; Strategy</option>
+            <option value="Nwd0e1xs1">Implementation</option>
+            <option value="vYwBiJqxd">Technology Selection</option>
+            <option value="RPk0dEsKN">Risk Management</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Date</label>
+          <input type="date" name="date" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Short Description</label>
+        <input type="text" name="shortDescription" placeholder="One sentence summary shown in the article card" />
+      </div>
+
+      <div class="field">
+        <label>Intro Header</label>
+        <input type="text" name="introHeader" placeholder="Large headline shown at the top of the article" />
+      </div>
+
+      <div class="field">
+        <label>Content <span style="font-weight:400;color:#aaa">(HTML supported)</span></label>
+        <textarea name="content" placeholder="<p>Article body goes here...</p>&#10;<p>You can use <strong>bold</strong>, <em>italic</em>, etc.</p>"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Main Image URL</label>
+        <input type="url" name="mainImageUrl" placeholder="https://..." />
+      </div>
+
+      <div class="section-title">Author</div>
+
+      <div class="row">
+        <div class="field">
+          <label>Author Name</label>
+          <input type="text" name="authorName" placeholder="e.g. SystemLink Team" />
+        </div>
+        <div class="field">
+          <label>Author Role</label>
+          <input type="text" name="authorRole" placeholder="e.g. ERP Consultant" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Author Image URL</label>
+        <input type="url" name="authorImageUrl" placeholder="https://..." />
+      </div>
+
+      <div class="secret-field">
+        <div class="field">
+          <label>Secret Key *</label>
+          <input type="password" name="secret" placeholder="Required to publish" required />
+        </div>
+      </div>
+
+      <button type="submit" id="btn">Publish Article</button>
+      <div id="status"></div>
+
+    </form>
+  </div>
+
+  <script>
+    // Set today's date as default
+    document.querySelector('[name="date"]').valueAsDate = new Date()
+
+    // Auto-generate slug from title
+    document.querySelector('[name="title"]').addEventListener('input', e => {
+      const slug = e.target.value
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-')
+      document.querySelector('[name="slug"]').value = slug
+    })
+
+    document.getElementById('form').addEventListener('submit', async e => {
+      e.preventDefault()
+      const btn = document.getElementById('btn')
+      const status = document.getElementById('status')
+      const data = Object.fromEntries(new FormData(e.target))
+      const secret = data.secret
+      delete data.secret
+
+      btn.disabled = true
+      btn.textContent = 'Publishing...'
+      status.className = 'loading'
+      status.textContent = 'Connecting to Framer and publishing...'
+
+      try {
+        const res = await fetch('/api/publish', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-secret': secret,
+          },
+          body: JSON.stringify(data),
+        })
+
+        const json = await res.json()
+
+        if (res.ok) {
+          status.className = 'success'
+          status.textContent = `Article "${data.title}" published successfully on systemlink.ch`
+          e.target.reset()
+          document.querySelector('[name="date"]').valueAsDate = new Date()
+        } else {
+          status.className = 'error'
+          status.textContent = `Error: ${json.error}`
+        }
+      } catch (err) {
+        status.className = 'error'
+        status.textContent = `Network error: ${err.message}`
+      }
+
+      btn.disabled = false
+      btn.textContent = 'Publish Article'
+    })
+  </script>
+</body>
+</html>

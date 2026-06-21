@@ -1,0 +1,25 @@
+name: Publish Article
+
+on:
+  repository_dispatch:
+    types: [publish-article]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: npm install
+
+      - name: Push article to Framer CMS
+        env:
+          FRAMER_API_KEY: ${{ secrets.FRAMER_API_KEY }}
+          ARTICLE_PAYLOAD: ${{ toJson(github.event.client_payload) }}
+        run: node publish-action.js
