@@ -7,7 +7,17 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: "Unauthorized" })
   }
 
-  const body = req.body
+  let body = req.body
+
+  // If body came in as a string (e.g. Claude output with markdown), parse it
+  if (typeof body === "string") {
+    const cleaned = body.replace(/```json\s*/g, "").replace(/```\s*/g, "").trim()
+    try {
+      body = JSON.parse(cleaned)
+    } catch {
+      return res.status(400).json({ error: "Could not parse body as JSON" })
+    }
+  }
 
   if (!body.slug || !body.title || !body.content) {
     return res.status(400).json({ error: "Missing required fields: slug, title, content" })
